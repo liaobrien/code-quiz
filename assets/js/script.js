@@ -8,11 +8,17 @@ var getContainer = document.querySelector(".quizbox")
 
 var changeQuestion = document.getElementById("question")
 
+// makes list of answer choices and buttons for each answer choice
 var answerChoices = document.createElement("ul")
 var a = document.createElement("button");
 var b = document.createElement("button");
 var c = document.createElement("button");
 var d = document.createElement("button");
+
+a.id = "a";
+b.id = "b";
+c.id = "c";
+d.id = "d";
 
 var initialsLabel = document.createElement("label");
 var initialsTextBox = document.createElement("input");
@@ -20,7 +26,7 @@ var initialsTextBox = document.createElement("input");
 // put questions in objects within an array
 var allQuestions = [
       {
-            question: "Commonly used data type Do Not include: ---",
+            question: "Commonly used data types DO NOT include _____.",
             choices: {
                   a: "strings",
                   b: "alerts",
@@ -30,7 +36,7 @@ var allQuestions = [
             answer: "b"
       },
       {
-            question: "The condition in an if/else statement is enclosed within: ---",
+            question: "The condition in an if/else statement is enclosed within _____.",
             choices: {
                   a: "quotes",
                   b: "parentheses",
@@ -40,7 +46,7 @@ var allQuestions = [
             answer: "b"
       },
       {
-            question: "Arrays in JavaScript can be used to store: ---",
+            question: "Arrays in JavaScript can be used to store _____.",
             choices: {
                   a: "numbers and strings",
                   b: "other arrays",
@@ -50,7 +56,7 @@ var allQuestions = [
             answer: "d"
       },
       {
-            question: "String values must be enclosed within --- when being assigned to variables ",
+            question: "String values must be enclosed within _____ when being assigned to variables ",
             choices: {
                   a: "commas",
                   b: "curly brackets",
@@ -60,7 +66,7 @@ var allQuestions = [
             answer: "c"
       },
       {
-            question: "A very useful tool used during development and debugging for printing content to the debugger is: ---",
+            question: "A very useful tool used during development and debugging for printing content to the debugger is _____.",
             choices: {
                   a: "console.log",
                   b: "JavaScript",
@@ -85,16 +91,16 @@ function startTimer(event) {
             else if (timeLeft === 0) {
                   timer.textContent = "Time's up!";
                   clearInterval(timeInterval);
-                  // call a function that shows game over or skip to entering score page?
+                  endOfGame();
             }
 
             timeLeft--;
 
       }, 1000)
-      firstQuestion();
+      firstQuestion(event);
 }
 
-function firstQuestion() {
+function firstQuestion(event) {
       changeQuestion.textContent = allQuestions[0].question;
 
       getContainer.appendChild(answerChoices);
@@ -112,9 +118,23 @@ function firstQuestion() {
       b.addEventListener("click", secondQuestion);
       c.addEventListener("click", secondQuestion);
       d.addEventListener("click", secondQuestion);
+
 }
 
-function secondQuestion() {
+function secondQuestion(event) {
+      var chosenAnswer = event.target.id;
+      var rightAnswer = allQuestions[0].answer;
+
+      console.log(event.target.id);
+
+      if (chosenAnswer === rightAnswer) {
+            alert("You are correct!");
+      }
+      else {
+            timeLeft = timeLeft - 7
+            alert("you are incorrect");
+      }
+
       changeQuestion.textContent = allQuestions[1].question;
 
       getContainer.appendChild(answerChoices);
@@ -132,9 +152,24 @@ function secondQuestion() {
       b.addEventListener("click", thirdQuestion);
       c.addEventListener("click", thirdQuestion);
       d.addEventListener("click", thirdQuestion);
+
+      // console.log(e.target);
+
+      // console.log(event);
 }
 
-function thirdQuestion() {
+function thirdQuestion(event) {
+      var chosenAnswer = event.target.id;
+      var rightAnswer = allQuestions[1].answer;
+
+      if (chosenAnswer === rightAnswer) {
+            alert("you are correct");
+      }
+      else {
+            alert("you are incorrect");
+      }
+
+
       changeQuestion.textContent = allQuestions[2].question;
 
       getContainer.appendChild(answerChoices);
@@ -154,7 +189,18 @@ function thirdQuestion() {
       d.addEventListener("click", fourthQuestion);
 }
 
-function fourthQuestion() {
+function fourthQuestion(event) {
+      var chosenAnswer = event.target.id;
+      var rightAnswer = allQuestions[2].answer;
+
+      if (chosenAnswer === rightAnswer) {
+            alert("you are correct");
+      }
+      else {
+            alert("you are incorrect");
+      }
+
+
       changeQuestion.textContent = allQuestions[3].question;
 
       getContainer.appendChild(answerChoices);
@@ -168,13 +214,24 @@ function fourthQuestion() {
       c.textContent = allQuestions[3].choices.c;
       d.textContent = allQuestions[3].choices.d;
 
-      a.addEventListener("click", fifthQuestion)
-      b.addEventListener("click", fifthQuestion)
-      c.addEventListener("click", fifthQuestion)
-      d.addEventListener("click", fifthQuestion)
+      a.addEventListener("click", fifthQuestion);
+      b.addEventListener("click", fifthQuestion);
+      c.addEventListener("click", fifthQuestion);
+      d.addEventListener("click", fifthQuestion);
 }
 
-function fifthQuestion() {
+function fifthQuestion(event) {
+      var chosenAnswer = event.target.id;
+      var rightAnswer = allQuestions[3].answer;
+
+      if (chosenAnswer === rightAnswer) {
+            alert("you are correct");
+      }
+      else {
+            alert("you are incorrect");
+      }
+
+
       changeQuestion.textContent = allQuestions[4].question;
 
       getContainer.appendChild(answerChoices);
@@ -194,12 +251,27 @@ function fifthQuestion() {
       d.addEventListener("click", endOfGame)
 }
 
-function endOfGame() {
+function endOfGame(event) {
+      var chosenAnswer = event.target.id;
+      var rightAnswer = allQuestions[4].answer;
+
+      if (chosenAnswer === rightAnswer) {
+            alert("you are correct");
+      }
+      else {
+            alert("you are incorrect");
+      }
+
+
+      timer.setAttribute("style", "display: none");
       changeQuestion.textContent = "All Done! Your final score is " + timeLeft + ".";
 
       answerChoices.setAttribute("style", "display: none;");
 
-      initialsLabel.textContent = "Enter initials:"
+      getContainer.appendChild(initialsLabel);
+      getContainer.appendChild(initialsTextBox);
+
+      initialsLabel.textContent = "Enter your initials: "
 
 
 }
