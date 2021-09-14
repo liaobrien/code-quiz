@@ -11,9 +11,13 @@ h1 {
   top: 5px;
   right: 10px;
 }
+p {
+  font-size: 125%;
+}
 .quizbox {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   margin: 0 20% 0 20%;
   border: 5px solid purple;
   padding: 50px;
