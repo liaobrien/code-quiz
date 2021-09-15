@@ -2,11 +2,8 @@ console.log("hello");
 
 var timeLeft = 75;
 var timer = document.getElementById("timer")
-
 var startButton = document.getElementById("start");
-
 var getContainer = document.querySelector(".quizbox")
-
 var changeQuestion = document.getElementById("question")
 
 // makes list of answer choices and buttons for each answer choice
@@ -35,57 +32,56 @@ var savedScoreList = document.createElement("ol");
 var savedScores = document.createElement("li");
 
 // put questions in objects within an array
-var allQuestions = [
-      {
-            question: "Commonly used data types DO NOT include _____.",
-            choices: {
-                  a: "strings",
-                  b: "alerts",
-                  c: "booleans",
-                  d: "numbers"
-            },
-            answer: "b"
+var allQuestions = [{
+      question: "Commonly used data types DO NOT include _____.",
+      choices: {
+            a: "strings",
+            b: "alerts",
+            c: "booleans",
+            d: "numbers"
       },
-      {
-            question: "The condition in an if/else statement is enclosed within _____.",
-            choices: {
-                  a: "quotes",
-                  b: "parentheses",
-                  c: "curly brackets",
-                  d: "square brackets"
-            },
-            answer: "b"
+      answer: "b"
+},
+{
+      question: "The condition in an if/else statement is enclosed within _____.",
+      choices: {
+            a: "quotes",
+            b: "parentheses",
+            c: "curly brackets",
+            d: "square brackets"
       },
-      {
-            question: "Arrays in JavaScript can be used to store _____.",
-            choices: {
-                  a: "numbers and strings",
-                  b: "other arrays",
-                  c: "booleans",
-                  d: "all of the above"
-            },
-            answer: "d"
+      answer: "b"
+},
+{
+      question: "Arrays in JavaScript can be used to store _____.",
+      choices: {
+            a: "numbers and strings",
+            b: "other arrays",
+            c: "booleans",
+            d: "all of the above"
       },
-      {
-            question: "String values must be enclosed within _____ when being assigned to variables ",
-            choices: {
-                  a: "commas",
-                  b: "curly brackets",
-                  c: "quotes",
-                  d: "parentheses"
-            },
-            answer: "c"
+      answer: "d"
+},
+{
+      question: "String values must be enclosed within _____ when being assigned to variables ",
+      choices: {
+            a: "commas",
+            b: "curly brackets",
+            c: "quotes",
+            d: "parentheses"
       },
-      {
-            question: "A very useful tool used during development and debugging for printing content to the debugger is _____.",
-            choices: {
-                  a: "console.log",
-                  b: "JavaScript",
-                  c: "terminal/bash",
-                  d: "alerts"
-            },
-            answer: "a"
+      answer: "c"
+},
+{
+      question: "A very useful tool used during development and debugging for printing content to the debugger is _____.",
+      choices: {
+            a: "console.log",
+            b: "JavaScript",
+            c: "terminal/bash",
+            d: "alerts"
       },
+      answer: "a"
+},
 ]
 
 
@@ -96,8 +92,7 @@ function startTimer(event) {
       var timeInterval = setInterval(function () {
             if (timeLeft > 0) {
                   timer.textContent = "Time: " + timeLeft;
-            }
-            else if (timeLeft === 0) {
+            } else if (timeLeft === 0) {
                   timer.textContent = "Time's up!";
                   clearInterval(timeInterval);
                   endOfGame();
@@ -106,7 +101,7 @@ function startTimer(event) {
             timeLeft--;
 
       }, 1000)
-      firstQuestion(event);
+      firstQuestion();
 }
 
 function firstQuestion(event) {
@@ -133,26 +128,22 @@ function firstQuestion(event) {
 
 
 function secondQuestion(event) {
-      event.stopPropagation();
+      a.removeEventListener("click", secondQuestion);
+      b.removeEventListener("click", secondQuestion);
+      c.removeEventListener("click", secondQuestion);
+      d.removeEventListener("click", secondQuestion);
 
-      var chosenAnswer1 = "";
-      var rightAnswer1 = "";
-
+      // this group of lines in each function refer to the previous question
       chosenAnswer1 = event.target.getAttribute("class");
       rightAnswer1 = allQuestions[0].answer;
 
-      console.log(chosenAnswer1);
-      console.log(rightAnswer1);
-
       if (chosenAnswer1 === rightAnswer1) {
-            console.log("You are correct!");
+            alert("You are correct!");
+      } else {
+            timeLeft -= 10;
+            alert("You are incorrect.");
       }
-      else {
-            timeLeft = timeLeft - 7
-            console.log("You are incorrect.");
-      }
-
-      changeQuestion.innerHTML = "";
+      // end of 
 
       changeQuestion.textContent = allQuestions[1].question;
 
@@ -171,32 +162,25 @@ function secondQuestion(event) {
       b.addEventListener("click", thirdQuestion);
       c.addEventListener("click", thirdQuestion);
       d.addEventListener("click", thirdQuestion);
-
-
-      // console.log(e.target);
-
-      // console.log(event);
 }
 
 function thirdQuestion(event) {
-      event.stopPropagation();
-      var chosenAnswer2 = "";
-      var rightAnswer2 = "";
+
+      a.removeEventListener("click", thirdQuestion);
+      b.removeEventListener("click", thirdQuestion);
+      c.removeEventListener("click", thirdQuestion);
+      d.removeEventListener("click", thirdQuestion);
 
       chosenAnswer2 = event.target.getAttribute("class");
       rightAnswer2 = allQuestions[1].answer;
 
-      console.log(chosenAnswer2);
-      console.log(rightAnswer2);
 
       if (chosenAnswer2 === rightAnswer2) {
-            console.log("you are correct2");
+            alert("You are correct!");
+      } else {
+            timeLeft -= 10;
+            alert("You are incorrect.");
       }
-      else {
-            console.log("you are incorrect");
-      }
-
-      changeQuestion.innerHTML = "";
 
       changeQuestion.textContent = allQuestions[2].question;
 
@@ -218,21 +202,20 @@ function thirdQuestion(event) {
 }
 
 function fourthQuestion(event) {
-      event.stopPropagation();
-      var chosenAnswer3 = "";
-      var rightAnswer3 = "";
+      a.removeEventListener("click", fourthQuestion);
+      b.removeEventListener("click", fourthQuestion);
+      c.removeEventListener("click", fourthQuestion);
+      d.removeEventListener("click", fourthQuestion);
+
 
       chosenAnswer3 = event.target.getAttribute("class");
       rightAnswer3 = allQuestions[2].answer;
 
-      console.log(chosenAnswer3);
-      console.log(rightAnswer3);
-
       if (chosenAnswer3 === rightAnswer3) {
-            console.log("you are correct3");
-      }
-      else {
-            console.log("you are incorrect");
+            alert("You are correct!");
+      } else {
+            timeLeft -= 10;
+            alert("You are incorrect.");
       }
 
 
@@ -256,21 +239,22 @@ function fourthQuestion(event) {
 }
 
 function fifthQuestion(event) {
-      event.stopPropagation();
-      var chosenAnswer4 = "";
-      var rightAnswer4 = "";
+
+      a.removeEventListener("click", fifthQuestion);
+      b.removeEventListener("click", fifthQuestion);
+      c.removeEventListener("click", fifthQuestion);
+      d.removeEventListener("click", fifthQuestion);
+
 
       chosenAnswer4 = event.target.getAttribute("class");
       rightAnswer4 = allQuestions[3].answer;
 
-      console.log(chosenAnswer4);
-      console.log(rightAnswer4);
 
       if (chosenAnswer4 === rightAnswer4) {
-            console.log("you are correct4");
-      }
-      else {
-            console.log("you are incorrect");
+            alert("You are correct!");
+      } else {
+            timeLeft -= 10;
+            alert("You are incorrect.");
       }
 
 
@@ -287,27 +271,23 @@ function fifthQuestion(event) {
       c.textContent = allQuestions[4].choices.c;
       d.textContent = allQuestions[4].choices.d;
 
-      a.addEventListener("click", endOfGame)
-      b.addEventListener("click", endOfGame)
-      c.addEventListener("click", endOfGame)
-      d.addEventListener("click", endOfGame)
+      a.addEventListener("click", endOfGame);
+      b.addEventListener("click", endOfGame);
+      c.addEventListener("click", endOfGame);
+      d.addEventListener("click", endOfGame);
 }
 
 function endOfGame(event) {
-      event.stopPropagation();
-      var chosenAnswer5 = "";
-      var rightAnswer5 = "";
 
       chosenAnswer5 = event.target.getAttribute("class");
       rightAnswer5 = allQuestions[4].answer;
 
       if (chosenAnswer5 === rightAnswer5) {
-            console.log("you are correct5");
+            alert("You are correct!");
+      } else {
+            timeLeft -= 10;
+            alert("You are incorrect.");
       }
-      else {
-            console.log("you are incorrect");
-      }
-
 
       timer.setAttribute("style", "display: none");
       changeQuestion.textContent = "All Done! Your final score is " + timeLeft + ".";
@@ -322,38 +302,23 @@ function endOfGame(event) {
       initialsLabel.textContent = "Enter your initials: ";
       submitButton.textContent = "Submit";
 
-      submitButton.addEventListener("submit", function (event) {
-            event.preventDefault();
-            changeQuestion.textContent = "Highschores"
 
-            var userInitials = document.querySelector("#submit").value;
-
-            if (!userInitials) {
-                  alert("Cannot be left blank.");
-            }
-            else {
-                  alert("Success!");
-            }
-
-            localStorage.setItem("initials", userInitials);
-            localStorage.setItem("score", timeLeft);
-      })
 
 }
 
-// function showScores(event) {
-//       event.preventDefault();
-//       changeQuestion.textContent = "Highschores"
+submitButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      changeQuestion.textContent = "Highschores";
 
-//       var userInitials = document.querySelector("#submit").value;
+      getContainer.appendChild(savedScoreList);
+      savedScoreList.appendChild(savedScores);
 
-//       if (userInitials === "") {
-//             alert("Cannot be left blank.");
-//       }
+      var userInitials = document.querySelector("#submit").value;
 
-//       localStorage.setItem("initials", userInitials);
-//       localStorage.setItem("score", timeLeft);
-// }
+
+      localStorage.setItem("initials", userInitials);
+      localStorage.setItem("score", timeLeft);
+})
 
 startButton.addEventListener("click", startTimer);
 
