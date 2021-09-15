@@ -3,6 +3,7 @@ console.log("hello");
 var timeLeft = 75;
 var timer = document.getElementById("timer")
 
+var startButton = document.getElementById("start");
 
 var getContainer = document.querySelector(".quizbox")
 
@@ -15,13 +16,23 @@ var b = document.createElement("button");
 var c = document.createElement("button");
 var d = document.createElement("button");
 
-a.id = "a";
-b.id = "b";
-c.id = "c";
-d.id = "d";
+// making buttons correspond to 'answer' in each object in the array
+a.setAttribute("class", "a");
+b.setAttribute("class", "b");
+c.setAttribute("class", "c");
+d.setAttribute("class", "d");
 
+// for the end of game page where user submits initials
+var endOfGameForm = document.createElement("form");
 var initialsLabel = document.createElement("label");
 var initialsTextBox = document.createElement("input");
+var submitButton = document.createElement("button")
+
+submitButton.id = "submit"
+
+// to show all saved scores
+var savedScoreList = document.createElement("ol");
+var savedScores = document.createElement("li");
 
 // put questions in objects within an array
 var allQuestions = [
@@ -77,8 +88,6 @@ var allQuestions = [
       },
 ]
 
-var startButton = document.getElementById("start");
-
 
 function startTimer(event) {
       event.preventDefault();
@@ -121,19 +130,29 @@ function firstQuestion(event) {
 
 }
 
+
+
 function secondQuestion(event) {
-      var chosenAnswer = event.target.id;
-      var rightAnswer = allQuestions[0].answer;
+      event.stopPropagation();
 
-      console.log(event.target.id);
+      var chosenAnswer1 = "";
+      var rightAnswer1 = "";
 
-      if (chosenAnswer === rightAnswer) {
-            alert("You are correct!");
+      chosenAnswer1 = event.target.getAttribute("class");
+      rightAnswer1 = allQuestions[0].answer;
+
+      console.log(chosenAnswer1);
+      console.log(rightAnswer1);
+
+      if (chosenAnswer1 === rightAnswer1) {
+            console.log("You are correct!");
       }
       else {
             timeLeft = timeLeft - 7
-            alert("you are incorrect");
+            console.log("You are incorrect.");
       }
+
+      changeQuestion.innerHTML = "";
 
       changeQuestion.textContent = allQuestions[1].question;
 
@@ -153,22 +172,31 @@ function secondQuestion(event) {
       c.addEventListener("click", thirdQuestion);
       d.addEventListener("click", thirdQuestion);
 
+
       // console.log(e.target);
 
       // console.log(event);
 }
 
 function thirdQuestion(event) {
-      var chosenAnswer = event.target.id;
-      var rightAnswer = allQuestions[1].answer;
+      event.stopPropagation();
+      var chosenAnswer2 = "";
+      var rightAnswer2 = "";
 
-      if (chosenAnswer === rightAnswer) {
-            alert("you are correct");
+      chosenAnswer2 = event.target.getAttribute("class");
+      rightAnswer2 = allQuestions[1].answer;
+
+      console.log(chosenAnswer2);
+      console.log(rightAnswer2);
+
+      if (chosenAnswer2 === rightAnswer2) {
+            console.log("you are correct2");
       }
       else {
-            alert("you are incorrect");
+            console.log("you are incorrect");
       }
 
+      changeQuestion.innerHTML = "";
 
       changeQuestion.textContent = allQuestions[2].question;
 
@@ -190,14 +218,21 @@ function thirdQuestion(event) {
 }
 
 function fourthQuestion(event) {
-      var chosenAnswer = event.target.id;
-      var rightAnswer = allQuestions[2].answer;
+      event.stopPropagation();
+      var chosenAnswer3 = "";
+      var rightAnswer3 = "";
 
-      if (chosenAnswer === rightAnswer) {
-            alert("you are correct");
+      chosenAnswer3 = event.target.getAttribute("class");
+      rightAnswer3 = allQuestions[2].answer;
+
+      console.log(chosenAnswer3);
+      console.log(rightAnswer3);
+
+      if (chosenAnswer3 === rightAnswer3) {
+            console.log("you are correct3");
       }
       else {
-            alert("you are incorrect");
+            console.log("you are incorrect");
       }
 
 
@@ -221,14 +256,21 @@ function fourthQuestion(event) {
 }
 
 function fifthQuestion(event) {
-      var chosenAnswer = event.target.id;
-      var rightAnswer = allQuestions[3].answer;
+      event.stopPropagation();
+      var chosenAnswer4 = "";
+      var rightAnswer4 = "";
 
-      if (chosenAnswer === rightAnswer) {
-            alert("you are correct");
+      chosenAnswer4 = event.target.getAttribute("class");
+      rightAnswer4 = allQuestions[3].answer;
+
+      console.log(chosenAnswer4);
+      console.log(rightAnswer4);
+
+      if (chosenAnswer4 === rightAnswer4) {
+            console.log("you are correct4");
       }
       else {
-            alert("you are incorrect");
+            console.log("you are incorrect");
       }
 
 
@@ -252,14 +294,18 @@ function fifthQuestion(event) {
 }
 
 function endOfGame(event) {
-      var chosenAnswer = event.target.id;
-      var rightAnswer = allQuestions[4].answer;
+      event.stopPropagation();
+      var chosenAnswer5 = "";
+      var rightAnswer5 = "";
 
-      if (chosenAnswer === rightAnswer) {
-            alert("you are correct");
+      chosenAnswer5 = event.target.getAttribute("class");
+      rightAnswer5 = allQuestions[4].answer;
+
+      if (chosenAnswer5 === rightAnswer5) {
+            console.log("you are correct5");
       }
       else {
-            alert("you are incorrect");
+            console.log("you are incorrect");
       }
 
 
@@ -268,13 +314,46 @@ function endOfGame(event) {
 
       answerChoices.setAttribute("style", "display: none;");
 
-      getContainer.appendChild(initialsLabel);
-      getContainer.appendChild(initialsTextBox);
+      getContainer.appendChild(endOfGameForm);
+      endOfGameForm.appendChild(initialsLabel);
+      endOfGameForm.appendChild(initialsTextBox);
+      endOfGameForm.appendChild(submitButton);
 
-      initialsLabel.textContent = "Enter your initials: "
+      initialsLabel.textContent = "Enter your initials: ";
+      submitButton.textContent = "Submit";
 
+      submitButton.addEventListener("submit", function (event) {
+            event.preventDefault();
+            changeQuestion.textContent = "Highschores"
+
+            var userInitials = document.querySelector("#submit").value;
+
+            if (!userInitials) {
+                  alert("Cannot be left blank.");
+            }
+            else {
+                  alert("Success!");
+            }
+
+            localStorage.setItem("initials", userInitials);
+            localStorage.setItem("score", timeLeft);
+      })
 
 }
+
+// function showScores(event) {
+//       event.preventDefault();
+//       changeQuestion.textContent = "Highschores"
+
+//       var userInitials = document.querySelector("#submit").value;
+
+//       if (userInitials === "") {
+//             alert("Cannot be left blank.");
+//       }
+
+//       localStorage.setItem("initials", userInitials);
+//       localStorage.setItem("score", timeLeft);
+// }
 
 startButton.addEventListener("click", startTimer);
 
