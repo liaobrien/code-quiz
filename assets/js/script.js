@@ -95,7 +95,6 @@ function startTimer(event) {
             } else if (timeLeft === 0) {
                   timer.textContent = "Time's up!";
                   clearInterval(timeInterval);
-                  endOfGame();
             }
 
             timeLeft--;
@@ -308,16 +307,36 @@ function endOfGame(event) {
 
 submitButton.addEventListener("click", function (event) {
       event.preventDefault();
-      changeQuestion.textContent = "Highschores";
+      changeQuestion.textContent = "Highscores";
 
       getContainer.appendChild(savedScoreList);
-      savedScoreList.appendChild(savedScores);
+      // savedScoreList.appendChild(savedScores);
 
-      var userInitials = document.querySelector("#submit").value;
+      var userInfo = {
+            userInitials: initialsTextBox.value,
+            userScore: timeLeft
+      };
+      var scoreData = localStorage.getItem("userInfo");
+      var allSavedScores = [JSON.parse(scoreData)];
 
+      if (allSavedScores[0] !== null) {
+            allSavedScores = [...allSavedScores[0], userInfo];
+            var sortScores = allSavedScores.sort((a, b) => (a.userScore < b.userScore) ? 1 : -1)
+            localStorage.setItem("userInfo", JSON.stringify(sortScores));
+      }
+      else {
+            localStorage.setItem("userInfo", JSON.stringify([userInfo]));
+      }
 
-      localStorage.setItem("initials", userInitials);
-      localStorage.setItem("score", timeLeft);
+      endOfGameForm.setAttribute("style", "display: none;");
+
+      for (var i = 0; i < allSavedScores.length; i++) {
+            var highScore = document.createElement('li');
+            var newInitials = allSavedScores[i].userInitials;
+            var newScore = allSavedScores[i].userScore;
+            highScore.textContent = newInitials + ': ' + newScore;
+            savedScoreList.appendChild(highScore);
+      };
 })
 
 startButton.addEventListener("click", startTimer);
